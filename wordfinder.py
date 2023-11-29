@@ -1,3 +1,5 @@
+import random
+
 class WordFinder:
     """Word Finder: finds random words from a dictionary."""
 
@@ -25,5 +27,13 @@ class WordFinder:
     def display_words(self):
 
         print(f"{len(self.words_list)} words read")
+
+
+    def random(self):
+        random_word = random.choice(self.words_list)
+        return random_word[:-1:1]
+
+
+
 
 
