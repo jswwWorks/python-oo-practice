@@ -11,11 +11,13 @@ class WordFinder:
         Open file with words, call functions that create and clean word
         lists, calls function to display words.
         """
-        self.file = open("/usr/share/dict/words", "r")
-        #self.file = open("wordtestfile.txt", "r")
 
-        self.unfiltered_words_list = self.create_words_list()
-        self.words_list = self.clean_words_list()
+        # the only thing we want in the init is the word list
+
+        # self.file = open("/usr/share/dict/words", "r")
+        self.file = open("wordtestfile.txt", "r")
+
+        self.words_list = self.create_words_list()
 
         self.file.close()
 
@@ -24,7 +26,6 @@ class WordFinder:
 
     def __repr__(self):
         """Displays properties of WordFinder instance."""
-        print(f"This is the unfiltered word list: {self.unfiltered_words_list}")
         print(f"This is the filtered word list: {self.words_list}")
 
 
@@ -37,24 +38,9 @@ class WordFinder:
 
         return words_list
 
-    def clean_words_list(self):
-        """Filters initial word list to eliminate blank lines and comments."""
-        clean_words = []
-
-        for line in self.unfiltered_words_list:
-            empty_test = line.strip()
-
-            # If it's empty, this will catch it
-            if bool(empty_test) and not line.startswith("#"):
-                clean_words.append(line)
-
-        return clean_words
-
 
     def display_words(self):
         """Prints how many words are in unfiltered and filtered word lists."""
-
-        print(f"{len(self.unfiltered_words_list)} words in unfiltered file")
         print(f"There are {len(self.words_list)} words in filtered words list")
 
 
@@ -65,5 +51,40 @@ class WordFinder:
 
 
 
+class SpecialWordFinder(WordFinder):
+    """
+    Creates subclass of WordFinder to account for word files with
+    empty lines or commented lines
+    """
+
+    def __init__(self):
+        """
+        Dunder init inherits WordFinder dunder init
+        and creates a word list with only valid words
+        """
+        super().__init__()
+
+        self.words_list = self.clean_words_list()
+
+        super().random()
 
 
+    def __repr__(self):
+        """Displays properties of SpecialWordFinder instance."""
+        print(f"This is the word list: {self.words_list}")
+
+
+    def clean_words_list(self):
+        """Filters initial word list to eliminate blank lines and comments."""
+        clean_words = []
+
+        for line in self.words_list:
+            empty_test = line.strip()
+
+            # If it's empty, this will catch it
+            if bool(empty_test) and not line.startswith("#"):
+                clean_words.append(line)
+
+        print(clean_words)
+
+        return clean_words
