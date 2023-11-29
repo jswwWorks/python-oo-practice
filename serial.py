@@ -19,26 +19,31 @@ class SerialGenerator:
     """
 
     def __init__(self, start=100):
-        """Initializes starting point for serial numbers"""
+        """Initializes starting value for serial numbers & current value"""
         self.current = start
 
         # This will be static
         self.start = start
 
-    def generate(self):
-        """Generate serial number, incrementing by 1."""
-        self.result = self.current
-        self.current += 1
-
-        return self.result
-
-
-
-    def reset(self):
-        """Reset the serial number to initial value."""
-        self.current = self.start
+        # set two variables to the same value in python:
+        # self.current = self.start = start
 
     def __repr__(self):
+        """Helpful way to see contents of class instance"""
         return (f"This is starting point for the serial num {self.start}")
 
+    def generate(self):
+        """Generate serial number from current value
+        Additional serial numbers incremement by 1 from current value. """
 
+        self.result = self.current # Just make this a variable and not a property
+
+        # result = self.current
+        # properties should be limited to the dunder init
+
+        self.current += 1
+        return self.result
+
+    def reset(self):
+        """Reset the serial number to initial start value."""
+        self.current = self.start
